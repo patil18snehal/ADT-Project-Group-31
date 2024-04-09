@@ -80,18 +80,6 @@ JOIN TouristSpot s ON t.Name = s.Name AND t.Type = s.Type;
 
 SELECT * FROM ReviewRatings;
 
-CREATE TABLE users (
-    User_id INT AUTO_INCREMENT PRIMARY KEY,
-    Username VARCHAR(50) NOT NULL UNIQUE,
-    Password VARCHAR(255) NOT NULL,
-    Email_id VARCHAR(100) NOT NULL UNIQUE
-);
-
-INSERT INTO users (Username, Password, Email_id) VALUES ('vibhar', '12345', 'vibhar@iu.edu');
-INSERT INTO users (Username, Password, Email_id) VALUES ('patilsn', '12345', 'patiln@iu.edu');
-INSERT INTO users (Username, Password, Email_id) VALUES ('ubhoseka', '12345', 'ubhoseka@iu.edu');
-
-SELECT * FROM users;
 
 -- Average Google Rating of top 10 Spots in Maharashtra 
 SELECT t.City_ID, c.City_Name, t.Name,AVG(rr.Google_Review_Rating) AS Avg_Review_Rating
