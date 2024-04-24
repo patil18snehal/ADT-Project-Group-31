@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian States</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('IMG_4983.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Left pane */
+        .left-pane {
+            float: left;
+            width: 30%;
+            padding: 20px;
+            background-color: rgba(180, 114, 184, 0.8); /* Light gray translucent background */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            height: calc(100vh - 40px); /* Full height minus padding */
+            overflow-y: auto; /* Enable scrolling if content exceeds pane height */
+        }
+
+        /* Right pane */
+        .right-pane {
+            margin-left: 35%;
+            padding: 20px;
+            background-color: rgba(134, 189, 120, 0.8); /* Translucent beige background */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            
+        }
+        .returnbtn{
+        position: relative;
+        margin-left: 50%;
+        margin-top: 50%;
+        right: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        }
+
+    .return-button:hover {
+        background-color: #45a049;
+    }
+
+
+        /* Headings */
+        h2 {
+            color: #090c0e; /* Blue heading color */
+        }
+
+        /* Dropdown */
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            transition: border-color 0.3s ease;
+            appearance: none; /* Remove default dropdown arrow */
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Custom dropdown arrow */
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 30px; /* Add padding to make room for the arrow */
+        }
+
+        select:focus {
+            border-color: #121415;
+            outline: none;
+        }
+
+        /* Checkbox */
+        input[type="checkbox"] {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Radio button */
+        input[type="radio"] {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Heart button */
+        .wishlist {
+            font-size: 20px;
+            color: black;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .wishlist.active {
+            color: red;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="left-pane">
+        <h2>Select State:</h2>
+        <select id="stateDropdown">
+            <option value="">Select State</option>
+        </select>
+        <h2>Select City:</h2>
+        <select id="cityDropdown">
+            <option value="">Select City</option>
+        </select>
+        <h2>Best Time to Visit:</h2>
+        <div class="checkbox-options">
+            <input type="checkbox" id="morning" name="best-time" value="morning">
+            <label for="morning">Morning</label>
+            <input type="checkbox" id="afternoon" name="best-time" value="afternoon">
+            <label for="afternoon">Afternoon</label>
+            <input type="checkbox" id="evening" name="best-time" value="evening">
+            <label for="evening">Evening</label>
+            <input type="checkbox" id="all-times" name="best-time" value="all">
+            <label for="all-times">All Times</label>
+        </div>
+        <h2>DSLR Allowed:</h2>
+        <div class="checkbox-options">
+            <input type="checkbox" id="dslr-allowed" name="dslr-allowed">
+            <label for="dslr-allowed">Yes</label>
+        </div>
+        <h2>Google Review Rating:</h2>
+        <div class="radio-options">
+            <input type="radio" id="rating-1" name="rating" value="1">
+            <label for="rating-1">1 Star</label>
+            <input type="radio" id="rating-2" name="rating" value="2">
+            <label for="rating-2">2 Stars</label>
+            <input type="radio" id="rating-3" name="rating" value="3">
+            <label for="rating-3">3 Stars</label>
+            <input type="radio" id="rating-4" name="rating" value="4">
+            <label for="rating-4">4 Stars</label>
+            <input type="radio" id="rating-5" name="rating" value="5">
+            <label for="rating-5">5 Stars</label>
+        </div>
+        <h2>Type:</h2>
+        <select id="typeDropdown">
+            <option value="">Select Type</option>
+            <option value="War Memorial">War Memorial</option>
+            <option value="Tomb">Tomb</option>
+            <!-- Add more options here -->
+        </select>
+        <h2>Significance:</h2>
+        <select id="significanceDropdown">
+            <option value="">Select Significance</option>
+            <option value="Historical">Historical</option>
+            <option value="Religious">Religious</option>
+            <!-- Add more options here -->
+        </select>
+    </div>
+
+    <div class="right-pane">
+        <h2>Places in Selected State and City</h2>
+        <table id="placesTable" border= "1">
+            <thead>
+                <tr>
+                    <th>Place Name</th>
+                    <th>Wishlist</th>
+                </tr>
+            </thead>
+            <tbody id="placesBody">
+                <!-- Place names will be populated dynamically using JavaScript -->
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="returnbtn">
+    <a href="region.html">
+        <button id="returnToRegionButton" class="To Regions Page">&#x21A9; Return to Region</button>
+        </a>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Fetching states on page load
+            $.ajax({
+                type: "POST",
+                url: "fetch_zones_states.php",
+                dataType: "json",
+                success: function (data) {
+                    $.each(data, function (index, value) {
+                        $('#stateDropdown').append('<option value="' + value + '">' + value + '</option>');
+                    });
+                }
+            });
+
+            // Fetching cities based on selected state
+            $('#stateDropdown').change(function () {
+                var selectedState = $(this).val();
+                $.ajax({
+                    type: "POST",
+                    url: "fetch_cities.php",
+                    data: { state: selectedState },
+                    dataType: "json",
+                    success: function (data) {
+                        $('#cityDropdown').empty();
+                        $('#cityDropdown').append('<option value="">Select City</option>');
+                        $.each(data, function (index, value) {
+                            $('#cityDropdown').append('<option value="' + value + '">' + value + '</option>');
+                        });
+                    }
+                });
+            });
+
+            // Fetching places based on selected state and city
+            $('#cityDropdown').change(function () {
+                var selectedState = $('#stateDropdown').val();
+                var selectedCity = $(this).val();
+                var selectedBestTime = [];
+                $("input[name='best-time']:checked").each(function () {
+                    selectedBestTime.push($(this).val());
+                });
+                var dslrAllowed = $('#dslr-allowed').is(':checked') ? 'yes' : '';
+                var selectedRating = $("input[name='rating']:checked").val();
+                var selectedType = $('#typeDropdown').val();
+                var selectedSignificance = $('#significanceDropdown').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "fetch_places.php",
+                    data: {
+                        state: selectedState,
+                        city: selectedCity,
+                        bestTime: selectedBestTime,
+                        dslrAllowed: dslrAllowed,
+                        rating: selectedRating,
+                        type: selectedType,
+                        significance: selectedSignificance
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        $('#placesBody').empty();
+                        $.each(data, function (index, value) {
+                            $('#placesBody').append('<tr><td>' + value + '</td><td><button class="wishlist">&#x2661;</button></td></tr>');
+                        });
+                    }
+                });
+            });
+
+            // Toggle Wishlist on clicking the heart button
+            $(document).on('click', '.wishlist', function () {
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+</body>
+</html>

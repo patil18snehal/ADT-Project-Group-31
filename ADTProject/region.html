@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+    background-image: linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25)), url(reginbg2.jpeg);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Ensuring full height background */
+}
+
+.title {
+    text-align: center;
+    color: #fff;
+    margin-top: 50px;
+}
+
+.container {
+    width: 90%;
+    padding: 20px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Equally space items */
+    margin-top: 20px;
+}
+
+.box {
+    width: 250px; /* Increase width */
+    height: 300px; /* Increase height */
+    margin: 20px; /* Increase margin for spacing */
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px; /* Increase border radius for rounded corners */
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.box img {
+    display: block;
+    width: 100%;
+    height: 100%; /* Ensure the image fills the box */
+    object-fit: cover;
+}
+
+.caption {
+    position: absolute;
+    bottom: -100%; /* Initially hide the caption */
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 5px;
+    text-align: center;
+    transition: bottom 0.3s; /* Transition the bottom position */
+}
+
+.box:hover .caption {
+    bottom: 0; /* Show caption on hover */
+}
+
+button {
+    width: 200px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 20px;
+    background: transparent;
+    border: 2px solid #100302;
+    color: #eee7e7;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    left: 30%;
+    transform: translateX(-50%);
+}
+
+span {
+    background: #393363;
+    height: 100vh;
+    width: 0;
+    border-radius: 25px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    transition: 0.5s;
+}
+
+button:hover span {
+    width: 100%;
+}
+
+button:hover {
+    border: none;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="title">
+        <h1> EXPLORE THE REGION </h1>
+        <div>
+            <a href="Homepage.html">
+                <button type="button"><span></span>Homepage</button>
+            </a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="box">
+            <a href="eastern.php">
+                <img src="eastern.jpeg">
+                <div class="caption">Eastern Region</div>
+            </a>
+        </div>
+        <div class="box">
+            <a href="Central.html">
+                <img src="central.webp">
+                <div class="caption">Central Region</div>
+            </a>
+        </div>
+        <div class="box">
+            <a href="Northern.html">
+                <img src="Nothern.jpeg">
+                <div class="caption">Northern Region</div>
+            </a>
+        </div>
+        <div class="box">
+            <a href="western.html">
+                <img src="western.jpeg">
+                <div class="caption">Western Region</div>
+            </a>
+        </div>
+        <div class="box">
+            <a href="Southern.html">
+                <img src="southern.jpeg">
+                <div class="caption">Southern Region</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

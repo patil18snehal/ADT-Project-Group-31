@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>About Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        /* CSS for creative background */
+        body {
+            background-color: #f0f0f0; /* Light gray background */
+            background-image: url('background2.jpeg'); /* Add your background image URL */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the background image */
+            font-family: Arial, sans-serif; /* Use Arial font */
+            color: #333; /* Dark gray text color */
+            padding: 20px; /* Add some padding for content */
+            display: flex; /* Use flexbox */
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items horizontally */
+        }
+
+        .container {
+            max-width: 800px; /* Set maximum width for content */
+            width: 100%; /* Set width to 100% of container */
+            text-align: center; /* Center align content */
+        }
+
+        .content {
+            display: flex; /* Use flexbox */
+            align-items: center; /* Center content vertically */
+            margin-top: 20px; /* Add margin to top */
+        }
+
+        .content img {
+            max-width: 50%; /* Set maximum width for images */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 20px; /* Add margin to the right */
+        }
+
+        .small-img {
+            max-width: 100%;
+            height: auto; /* Set maximum width for small image */
+        }
+        button {
+    width: 200px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    background: transparent;
+    border: 2px solid #009688;
+    color: #000;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    right: -250%; /* Shift the button to the left */
+}
+
+span {
+    background: #009688;
+    height: auto;
+    width: 0;
+    border-radius: 25px;
+    position: absolute;
+    bottom: 0;
+    left: 0; /* Shift the span back to the center */
+    z-index: -1;
+    transition: 0.5s;
+}
+
+button:hover span {
+    width: 100%;
+}
+
+button:hover {
+    border: none;
+}
+
+   </style>
+</head>
+<body>
+    <div>
+        <a href="index.html">
+            <button type="button"><span></span>Back</button>
+        </a>
+    </div>
+    <div class="container">
+        <h1>Welcome to IndiaVoyage</h1>
+        <div class="content">
+            <img src="indiamap.jpeg">
+            <p>
+                Your gateway to discovering the wonders of India! <br>
+                Dive into our curated recommendations and effortlessly plan your own unique journey through 
+                India's captivating landscapes, rich history, and vibrant culture. 
+                <br>Let's start an unforgettable adventure together!
+            </p>
+        </div>
+        <br>
+        <p>
+            <h1>CURRENT HIGHLIGHTS</h1>
+            <br>
+            
+        </p>
+        <p>
+            There's no better time than now to plan your journey to India, a land of vibrant cultures, breathtaking landscapes, and rich heritage. 
+            <br>Whether it's exploring the majestic palaces of Rajasthan, immersing yourself in the spiritual tranquility of Varanasi, 
+            or savoring the flavors of Indian cuisine in bustling markets,
+            every moment spent in India is an unforgettable adventure waiting to be experienced. 
+            <br>Don't hesitate—each moment in India is a treasure trove of discovery that you won't want to miss.
+        </p>
+        <img src="image_about1.png" class="small-img">
+    </div>
+</body>
+</html>
