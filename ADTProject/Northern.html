@@ -64,18 +64,6 @@
             outline: none;
         }
 
-        /* Checkbox */
-        input[type="checkbox"] {
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-
-        /* Radio button */
-        input[type="radio"] {
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-
         /* Table */
         table {
             width: 100%;
@@ -96,169 +84,227 @@
             color: #333;
         }
 
-        /* Wishlist button */
+        /* Heart button */
         .wishlist {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
             font-size: 20px;
             color: black;
-            position: center;
+            border: none;
+            background: none;
+            cursor: pointer;
         }
 
-        /* Filled heart color */
         .wishlist.active {
             color: red;
         }
     </style>
 </head>
 <body>
-    <div class="left-pane">
-        <h2>Select State:</h2>
-        <select id="stateDropdown">
-            <option value="">Select State</option>
-        </select>
-        <h2>Select City:</h2>
-        <select id="cityDropdown">
-            <option value="">Select City</option>
-        </select>
-        <h2>Best Time to Visit:</h2>
-        <div class="checkbox-options">
-            <input type="checkbox" id="morning" name="best-time" value="morning">
-            <label for="morning">Morning</label>
-            <input type="checkbox" id="afternoon" name="best-time" value="afternoon">
-            <label for="afternoon">Afternoon</label>
-            <input type="checkbox" id="evening" name="best-time" value="evening">
-            <label for="evening">Evening</label>
-            <input type="checkbox" id="all-times" name="best-time" value="all">
-            <label for="all-times">All Times</label>
+    <form id="filterForm">
+        <div class="left-pane">
+            <h2>Select State:</h2>
+            <select id="stateDropdown">
+                <option value="">Select State</option>
+            </select>
+            <h2>Select City:</h2>
+            <select id="cityDropdown">
+                <option value="">Select City</option>
+            </select>
+            <h2>Select Type:</h2>
+            <select id="typeDropdown">
+                <option value="">Select Type</option>
+            </select>
+            <h2>Select Significance:</h2>
+            <select id="significanceDropdown">
+                <option value="">Select Significance</option>
+            </select>
         </div>
-        <h2>DSLR Allowed:</h2>
-        <div class="checkbox-options">
-            <input type="checkbox" id="dslr-allowed" name="dslr-allowed">
-            <label for="dslr-allowed">Yes</label>
-        </div>
-        <h2>Google Review Rating:</h2>
-        <div class="star-rating">
-            <input type="radio" id="rating-less-than-1" name="rating" value="<1">
-            <label for="rating-less-than-1" title="Less than 1 Star">&#9733;</label>
-            <input type="radio" id="rating-less-than-2" name="rating" value="<2">
-            <label for="rating-less-than-2" title="Less than 2 Stars">&#9733;</label>
-            <input type="radio" id="rating-3" name="rating" value="3">
-            <label for="rating-3" title="3 Stars">&#9733;</label>
-            <input type="radio" id="rating-4" name="rating" value="4">
-            <label for="rating-4" title="4 Stars">&#9733;</label>
-            <input type="radio" id="rating-5" name="rating" value="5">
-            <label for="rating-5" title="5 Stars">&#9733;</label>
-        </div>
-        <h2>Type:</h2>
-        <select id="typeDropdown">
-            <option value="">Select Type</option>
-            <option value="War Memorial">War Memorial</option>
-            <option value="Tomb">Tomb</option>
-            <!-- Add more options here -->
-        </select>
-        <h2>Significance:</h2>
-        <select id="significanceDropdown">
-            <option value="">Select Significance</option>
-            <option value="Historical">Historical</option>
-            <option value="Religious">Religious</option>
-            <!-- Add more options here -->
-        </select>
-    </div>
 
-    <div class="right-pane">
-        <h2>Places in Selected State and City</h2>
-        <table id="placesTable" border="1">
-            <thead>
-                <tr>
-                    <th>Place Name</th>
-                    <th>Wishlist</th>
-                </tr>
-            </thead>
-            <tbody id="placesBody">
-                <!-- Place names will be populated dynamically using JavaScript -->
-            </tbody>
-        </table>
-        <a href="region.html">
-        <button id="backButton" style="position: fixed; bottom: 10px; right: 10px;">Back to Regions</button>
-        </a>
-    </div>
+        <div class="right-pane">
+            <h2>Places in Selected State and City</h2>
+            <table id="placesTable" border="1">
+                <thead>
+                    <tr>
+                        <th>Place Name</th>
+                        <th>Exploration Time (hrs)</th>
+                        <th>Google Rating</th>
+                        <th>Weekly Off</th>
+                        <th>DSLR Allowed</th>
+                        <th>Wishlist </th> <!-- Heart symbol added here -->
+                    </tr>
+                </thead>
+                <tbody id="placesBody">
+                    <!-- Place details will be populated dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </form>
 
     <script>
-        $(document).ready(function () {
-            // Fetching states on page load
+       $(document).ready(function () {
+    // Fetching states on page load
+    $.ajax({
+        type: "POST",
+        url: "php/fetch_zones_states_northern.php",
+        dataType: "json",
+        success: function (data) {
+            $.each(data, function (index, value) {
+                $('#stateDropdown').append('<option value="' + value + '">' + value + '</option>');
+            });
+        }
+    });
+
+    // Fetching cities based on selected state
+    $('#stateDropdown').change(function () {
+        var selectedState = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "php/fetch_cities.php",
+            data: { state: selectedState },
+            dataType: "json",
+            success: function (data) {
+                $('#cityDropdown').empty();
+                $('#cityDropdown').append('<option value="">Select City</option>');
+                $.each(data, function (index, value) {
+                    $('#cityDropdown').append('<option value="' + value + '">' + value + '</option>');
+                });
+            }
+        });
+    });
+
+    // Fetching types based on selected state and city
+    $('#cityDropdown').change(function () {
+        var selectedState = $('#stateDropdown').val();
+        var selectedCity = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "php/fetch_types.php",
+            data: { state: selectedState, city: selectedCity },
+            dataType: "json",
+            success: function (data) {
+                $('#typeDropdown').empty();
+                $('#typeDropdown').append('<option value="">Select Type</option>');
+                $.each(data, function (index, value) {
+                    $('#typeDropdown').append('<option value="' + value + '">' + value + '</option>');
+                });
+            }
+        });
+    });
+
+    // Fetching significance based on selected state and city
+    $('#typeDropdown').change(function () {
+        var selectedState = $('#stateDropdown').val();
+        var selectedCity = $('#cityDropdown').val();
+        var selectedType = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "php/fetch_significance.php",
+            data: { state: selectedState, city: selectedCity, type: selectedType },
+            dataType: "json",
+            success: function (data) {
+                $('#significanceDropdown').empty();
+                $('#significanceDropdown').append('<option value="">Select Significance</option>');
+                $.each(data, function (index, value) {
+                    $('#significanceDropdown').append('<option value="' + value + '">' + value + '</option>');
+                });
+            }
+        });
+    });
+
+    // Fetching places based on all selected criteria
+    $('#significanceDropdown').change(function () {
+        var selectedState = $('#stateDropdown').val();
+        var selectedCity = $('#cityDropdown').val();
+        var selectedType = $('#typeDropdown').val();
+        var selectedSignificance = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "php/fetch_filtered_places.php",
+            data: { state: selectedState, city: selectedCity, type: selectedType, significance: selectedSignificance },
+            dataType: "json",
+            success: function (data) {
+                $('#placesBody').empty();
+                $.each(data, function (index, value) {
+                    var $row = $('<tr><td>' + value.name + '</td><td>' + value.Exploration_time + '</td><td>' + value.Google_rating + '</td><td>' + value.weekly_off + '</td><td>' + value.DSLR_allowed + '</td><td><button class="wishlist">&#x2661;</button></td></tr>');
+                    $('#placesBody').append($row);
+                    checkWishlist($row); // Check if the place is already in the wishlist
+                });
+            }
+        });
+    });
+
+    // Toggle Wishlist on clicking the heart button
+    $(document).on('click', '.wishlist', function (e) {
+        e.preventDefault(); // Prevent the default link behavior
+
+        var $row = $(this).closest('tr');
+        var placeData = {
+            name: $row.find('td:eq(0)').text(),
+            Exploration_time: $row.find('td:eq(1)').text(),
+            Google_rating: $row.find('td:eq(2)').text(),
+            weekly_off: $row.find('td:eq(3)').text(),
+            DSLR_allowed: $row.find('td:eq(4)').text()
+        };
+
+        var $heartIcon = $(this);
+
+        // Check if the heart button is already active (red)
+        if ($heartIcon.hasClass('active')) {
+            // If active, remove data from wishlist and change button color
             $.ajax({
                 type: "POST",
-                url: "fetch_zones_states.php",
+                url: "php/remove_from_wishlist.php",
+                data: placeData,
                 dataType: "json",
-                success: function (data) {
-                    $.each(data, function (index, value) {
-                        $('#stateDropdown').append('<option value="' + value + '">' + value + '</option>');
-                    });
+                success: function (response) {
+                    if (response.success) {
+                        $heartIcon.removeClass('active');
+                    } else {
+                        alert('Failed to remove from wishlist!');
+                    }
                 }
             });
-
-            // Fetching cities based on selected state
-            $('#stateDropdown').change(function () {
-                var selectedState = $(this).val();
-                $.ajax({
-                    type: "POST",
-                    url: "fetch_cities.php",
-                    data: { state: selectedState },
-                    dataType: "json",
-                    success: function (data) {
-                        $('#cityDropdown').empty();
-                        $('#cityDropdown').append('<option value="">Select City</option>');
-                        $.each(data, function (index, value) {
-                            $('#cityDropdown').append('<option value="' + value + '">' + value + '</option>');
-                        });
+        } else {
+            // If not active, add data to wishlist and change button color
+            $.ajax({
+                type: "POST",
+                url: "php/add_to_wishlist.php",
+                data: placeData,
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        $heartIcon.addClass('active');
+                    } else {
+                        alert('Failed to add to wishlist!');
                     }
-                });
+                }
             });
+        }
+    });
+});
 
-            // Fetching places based on selected state and city
-            $('#cityDropdown').change(function () {
-                var selectedState = $('#stateDropdown').val();
-                var selectedCity = $(this).val();
-                var selectedBestTime = [];
-                $("input[name='best-time']:checked").each(function () {
-                    selectedBestTime.push($(this).val());
-                });
-                var dslrAllowed = $('#dslr-allowed').is(':checked') ? 'yes' : '';
-                var selectedRating = $("input[name='rating']:checked").val();
-                var selectedType = $('#typeDropdown').val();
-                var selectedSignificance = $('#significanceDropdown').val();
+function checkWishlist($row) {
+    var placeData = {
+        name: $row.find('td:eq(0)').text(),
+        Exploration_time: $row.find('td:eq(1)').text(),
+        Google_rating: $row.find('td:eq(2)').text(),
+        weekly_off: $row.find('td:eq(3)').text(),
+        DSLR_allowed: $row.find('td:eq(4)').text()
+    };
 
-                $.ajax({
-                    type: "POST",
-                    url: "fetch_places.php",
-                    data: {
-                        state: selectedState,
-                        city: selectedCity,
-                        bestTime: selectedBestTime,
-                        dslrAllowed: dslrAllowed,
-                        rating: selectedRating,
-                        type: selectedType,
-                        significance: selectedSignificance
-                    },
-                    dataType: "json",
-                    success: function (data) {
-                        $('#placesBody').empty();
-                        $.each(data, function (index, value) {
-                            $('#placesBody').append('<tr><td>' + value + '</td><td><button class="wishlist" value="' + value + '">&#10084;</button></td></tr>');
-                        });
-                    }
-                });
-            });
-
-            // Handle adding places to wishlist
-            $(document).on('click', '.wishlist', function () {
-                $(this).toggleClass('active'); // Toggle the 'active' class
-                var placeName = $(this).val();
-                // Here you can implement the logic to add/remove the place to/from the wishlist
-            });
-        });
+    // Check if the place is already in the wishlist
+    $.ajax({
+        type: "POST",
+        url: "php/check_wishlist.php",
+        data: placeData,
+        dataType: "json",
+        success: function (response) {
+            if (response.exists) {
+                $row.find('.wishlist').addClass('active');
+            }
+        }
+    });
+}
     </script>
 </body>
 </html>
+

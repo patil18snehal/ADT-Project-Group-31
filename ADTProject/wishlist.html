@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+    background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),url(images/travel-wishlist.webp);
+    color: white; /* Text color */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.homepage-button button {
+    width: 200px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 20px;
+    background: transparent;
+    border: 2px solid #100302;
+    color: #eee7e7;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transform: translateX(-50%);
+}
+
+.homepage-button span {
+    background: #88c7e4;
+    height: 100vh;
+    width: 0;
+    border-radius: 25px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    transition: 0.5s;
+}
+
+.homepage-button button:hover span {
+    width: 100%;
+}
+
+.homepage-button button:hover {
+    border: none;
+}
+
+/* Delete button styles */
+.delete-btn {
+    /* Define your delete button styles here */
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Adjust as needed */
+    color: #ffffff;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: rgba(200, 233, 247, 0.5); /* Translucent white */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Wishlist</h1>
+            <div class="homepage-button">
+                <a href="Homepage.html">
+                    <button type="button"><span></span>Homepage</button>
+                </a>
+            </div>
+        </div>
+        <table id="wishlistTable">
+            <thead>
+                <tr>
+                    <th>Delete</th>
+                    <th>Name</th>
+                    <th>Exploration Time (hrs)</th>
+                    <th>Google Rating</th>
+                    <th>Weekly Off</th>
+                    <th>DSLR Allowed</th>
+                </tr>
+            </thead>
+            <tbody id="wishlistBody">
+                <!-- Wishlist items will be populated dynamically using JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Fetch wishlist items on page load
+            fetchWishlist();
+
+            // Event listener for delete buttons
+            $(document).on('click', '.delete-btn', function () {
+                var $row = $(this).closest('tr');
+                var userId = $row.find('.user-id').text();
+                var name = $row.find('.name').text();
+                deleteWishlistItem(userId, name); // Fix typo here
+            });
+        });
+
+        function fetchWishlist() {
+            $.ajax({
+                type: "POST",
+                url: "DreamQuest.php",
+                dataType: "json",
+                success: function (data) {
+                    displayWishlist(data);
+                }
+            });
+        }
+
+        function displayWishlist(wishlistItems) {
+            var $wishlistBody = $('#wishlistBody');
+            $wishlistBody.empty();
+
+            if (wishlistItems.length === 0) {
+                $wishlistBody.append('<tr><td colspan="8">No items in wishlist</td></tr>');
+            } else {
+                $.each(wishlistItems, function (index, item) {
+                    $wishlistBody.append('<tr><td><button class="delete-btn">X</button></td><td class="name">' + item.name + '</td><td>' + item.Exploration_time + '</td><td>' + item.Google_rating + '</td><td>' + item.weekly_off + '</td><td>' + item.DSLR_allowed  + '</td></tr>');
+                });
+            }
+        }
+
+        function deleteWishlistItem(userId, name) {
+            $.ajax({
+                type: "POST",
+                url: "deletefromwishlist.php",
+                data: { name: name },
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        // Reload the page after successful deletion
+                        location.reload();
+                    } else {
+                        alert('Failed to delete wishlist item!');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

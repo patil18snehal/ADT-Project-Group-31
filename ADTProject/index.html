@@ -6,7 +6,7 @@
     <title>India Voyage | Login | Registration</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style.css">
     <script src='main.js'></script>
 </head>
 <body>
@@ -36,7 +36,7 @@
                     <header>Login</header>
                 </div>
                 <!--  sign in -->
-                <form action="connect_signin.php" method="post">
+                <form action="./php/connect_signin.php" method="post">
                     <div class="input-box">
                         <input type="text" name="email" class="input-field" placeholder="Email">
                         <i class="bx bx-user"></i>
@@ -49,15 +49,6 @@
                         <input type="submit" class="submit" value="Sign In">
                     </div>
                 </form>
-                <div class="two-col">
-                    <div class="one">
-                        <input type="checkbox" id="login-check">
-                        <label for="login-check"> Remember Me</label>
-                    </div>
-                    <div class="two">
-                        <label><a href="#">Forgot password?</a></label>
-                    </div>
-                </div>
             </div>
             <div class="register-container" id="register">
                 <div class="top">
@@ -65,7 +56,7 @@
                     <header>Sign Up</header>
                 </div>
                 <!--sign up -->
-                <form action="connect_signup.php" method="post">
+                <form action="./php/connect_signup.php" method="post">
                     <div class="two-forms">
                         <div class="input-box">
                             <input type="text" name="firstname" class="input-field" placeholder="Firstname">
@@ -88,15 +79,6 @@
                         <input type="submit" class="submit" value="Register">
                     </div>
                 </form>
-                <div class="two-col">
-                    <div class="one">
-                        <input type="checkbox" id="register-check">
-                        <label for="register-check"> Remember Me</label>
-                    </div>
-                    <div class="two">
-                        <label><a href="#">Terms & conditions</a></label>
-                    </div>
-                </div>
             </div>
         </div>
     </div>   
